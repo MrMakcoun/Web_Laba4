@@ -8,6 +8,82 @@
 @import url('../blocks/places/places.css');
 @import url('../blocks/card/card.css');
 @import url('../blocks/popup/popup.css');
-@import url('../blocks/popup/_is-animated/popup_is-animated.css');
 @import url('../blocks/popup/_is-opened/popup_is-opened.css');
-/*Импортируем на уровень выше*/
+
+.profile__image {
+  background-color: #292929;
+  border: 0;
+  flex: 0 0 auto;
+  padding: 0;
+}
+
+.card__preview {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: #292929;
+  cursor: zoom-in;
+}
+
+.card__image {
+  display: block;
+}
+
+.card__details {
+  min-width: 0;
+}
+
+.card__region {
+  margin: 4px 0 0;
+  color: #484848;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.card__like-button {
+  flex-shrink: 0;
+}
+
+.popup__content:not(.popup__content_content_image) {
+  max-height: calc(100dvh - 80px);
+}
+
+.toast {
+  position: fixed;
+  z-index: 20;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  max-width: min(350px, calc(100% - 32px));
+  box-sizing: border-box;
+  padding: 14px 18px;
+  border-left: 4px solid #4bce8a;
+  border-radius: 8px;
+  background: #21342b;
+  color: #fff;
+  box-shadow: 0 6px 24px #0005;
+  font: 500 14px/1.4 Inter, Arial, sans-serif;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.toast_visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast { transition: none; }
+}
+
+@media (max-height: 560px) {
+  .popup__content:not(.popup__content_content_image) {
+    padding-block: 18px;
+  }
+
+  .popup__label {
+    margin-bottom: 2px;
+  }
+}

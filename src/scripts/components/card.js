@@ -1,42 +1,37 @@
-export const likeCard = (likeButton) => {
-  likeButton.classList.toggle("card__like-button_is-active");
-};
+const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');
 
-export const deleteCard = (cardElement) => {
+export function likeCard(likeButton) {
+  const liked = likeButton.classList.toggle('card__like-button_is-active');
+  likeButton.setAttribute('aria-pressed', String(liked));
+}
+
+export function deleteCard(cardElement) {
   cardElement.remove();
-};
+}
 
-const getTemplate = () => {
-  return document
-    .getElementById("card-template")
-    .content.querySelector(".card")
-    .cloneNode(true);
-};
+function getTemplate() {
+  return cardTemplate.cloneNode(true);
+}
 
-export const createCardElement = (
-  data,
-  { onPreviewPicture, onLikeIcon, onDeleteCard }
-) => {
+export function createCardElement(data, { onPreviewPicture, onLikeIcon, onDeleteCard }) {
   const cardElement = getTemplate();
-  const likeButton = cardElement.querySelector(".card__like-button");
-  const deleteButton = cardElement.querySelector(".card__control-button_type_delete");
-  const cardImage = cardElement.querySelector(".card__image");
+  const likeButton = cardElement.querySelector('.card__like-button');
+  const deleteButton = cardElement.querySelector('.card__control-button_type_delete');
+  const previewButton = cardElement.querySelector('.card__preview');
+  const cardImage = previewButton.querySelector('.card__image');
+  const regionElement = cardElement.querySelector('.card__region');
 
   cardImage.src = data.link;
   cardImage.alt = data.name;
-  cardElement.querySelector(".card__title").textContent = data.name;
-
-  if (onLikeIcon) {
-    likeButton.addEventListener("click", () => onLikeIcon(likeButton));
+  cardElement.querySelector('.card__title').textContent = data.name;
+  if (data.region) {
+    regionElement.textContent = data.region;
+    regionElement.hidden = false;
   }
 
-  if (onDeleteCard) {
-    deleteButton.addEventListener("click", () => onDeleteCard(cardElement));
-  }
-
-  if (onPreviewPicture) {
-    cardImage.addEventListener("click", () => onPreviewPicture({name: data.name, link: data.link}));
-  }
+  likeButton.addEventListener('click', () => onLikeIcon(likeButton));
+  deleteButton.addEventListener('click', () => onDeleteCard(cardElement));
+  previewButton.addEventListener('click', () => onPreviewPicture(data));
 
   return cardElement;
-};
+}
